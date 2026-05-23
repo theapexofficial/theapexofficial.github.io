@@ -51,6 +51,7 @@
     </footer>
 
     <script>
+       // Chronological Content Logs (Full 23-Topic Lineup)
         const blogPosts = [
             {"id": 0, "title": "WELCOME TO THE APEX", "cat": "Daily", "image": "https://parkplus-bkt-img.parkplus.io/production/chariot_staging/public/steeringwheel54jpgimage_20230808192212588541.jpg"},
             {"id": 1, "title": "Kimi Antonelli: The Rise of a Generational Prodigy", "cat": "F1", "image": "https://media.formula1.com/image/upload/t_16by9North/c_lfill,w_3392/q_auto/v1740000001/fom-website/2025/Mexico/GettyImages-2243232001.webp"},
@@ -64,7 +65,17 @@
             {"id": 9, "title": "McLaren W1: The Extreme Successor", "cat": "Reviews", "image": "https://hips.hearstapps.com/mtg-prod/6701d85fa0855d0008fea61c/mclaren-w1-3.jpg"},
             {"id": 10, "title": "Porsche GT3 RS: Pure DRS Logic Explained", "cat": "Reviews", "image": "https://a.storyblok.com/f/322327/1700x1300/dbca0a4fd0/cz23v20ox0040-911-gt3-rs-front.jpg"},
             {"id": 11, "title": "Ground Effect: The Magic of Venturi Tunnels", "cat": "F1", "image": "https://d3535lqr6sqxto.cloudfront.net/blogs/bHdRK0P9Rn5vZnmdidH1wkSoZsAB4BoC1uYLtVmk.jpeg"},
-            {"id": 12, "title": "F1 2026: 100% Sustainable Fuels Are Coming", "cat": "Daily", "image": "https://media.formula1.com/image/upload/t_16by9Centre/c_lfill,w_3392/q_auto/v1740000001/fom-website/campaign/ESG/Aramco%20advanced%20fuel.webp"}
+            {"id": 12, "title": "F1 2026: 100% Sustainable Fuels Are Coming", "cat": "Daily", "image": "https://media.formula1.com/image/upload/t_16by9Centre/c_lfill,w_3392/q_auto/v1740000001/fom-website/campaign/ESG/Aramco%20advanced%20fuel.webp"},
+            {"id": 13, "title": "Manual Gearbox: Saving the Analog Soul", "cat": "Daily", "image": "https://static0.hotcarsimages.com/wordpress/wp-content/uploads/2020/06/Gated-Shifter.jpg"},
+            {"id": 14, "title": "Bentley Supersports 2026: Luxury Meets Violence", "cat": "Reviews", "image": "https://www.topgearmag.in/uploads/News/Image/1763121086-resizecom_1%20-%20New%20Supersports,%20front%203qtr.jpg"},
+            {"id": 15, "title": "Inside the McLaren MTC Wind Tunnel", "cat": "Daily", "image": "https://media.formula1.com/image/upload/c_lfill,w_3392/q_auto/v1740000001/content/dam/fom-website/manual/Misc/2019-Races/summer-break-2019/McLaren-MTC-wind-tunnel.webp"},
+            {"id": 16, "title": "Suspension Setup: What is Anti-Dive Control?", "cat": "Daily", "image": "https://i0.wp.com/suspensionsecrets.co.uk/wp-content/uploads/2018/08/anti-dive-1.jpg?resize=750%2C500"},
+            {"id": 17, "title": "Audi F1: Tracking the Neuburg Infrastructure", "cat": "F1", "image": "https://media.formula1.com/image/upload/c_lfill,w_2048/q_auto/v1740000001/fom-website/2026/Audi/16x9%20single%20image%20(41).webp"},
+            {"id": 18, "title": "Ferrari F80: True Le Mans DNA on the Street", "cat": "Reviews", "image": "https://www.topgear.com/sites/default/files/2025/07/1-Ferrari-F80-review-2025.jpg"},
+            {"id": 19, "title": "F1 Cost Cap: Preventing Clever IP Leakage", "cat": "F1", "image": "https://media.formula1.com/image/upload/c_lfill,w_3392/q_auto/v1740000001/fom-website/2025/Miscellaneous/GettyImages-2169727936.webp"},
+            {"id": 20, "title": "BMW S58 Engine: Built for Endless Abuse", "cat": "Daily", "image": "https://cdn.bmwblog.com/wp-content/uploads/2020/09/2021-bmw-m4-competition-exterior-37.jpg"},
+            {"id": 21, "title": "Advanced Composites: How the Bio-Resin Cycle Works", "cat": "Daily", "image": "https://images.ctfassets.net/1fvlg6xqnm65/1Vo9OYscR8ggC1RVzYqjWl/9806e4d885f5dbedd370ad7cd7a4b066/Bio-Resin-WEB-IMAGE-2.jpg?w=1920&q=75&fm=webp"},
+            {"id": 22, "title": "F1 2026: Active Aero Modes (X-Mode vs Z-Mode)", "cat": "F1", "image": "https://cdn.motorsport.com/images/mgl/YpNMjxZ0/s1000/f1-2026-fia-car-renders.jpg"}
         ];
 
         function getContent(title) {
