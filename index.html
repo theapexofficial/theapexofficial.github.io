@@ -17,6 +17,7 @@
         #content-reader { display: none; background: #1e1e1e; padding: 30px; border-radius: 10px; margin-top: 20px; }
         .btn-danger { background-color: #dc3545; border: none; }
         .hero-section { background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), url('https://images.unsplash.com/photo-1614200187524-dc4b892acf16?q=80&w=2000&auto=format&fit=crop') center/cover; padding: 100px 0; }
+        .section-title { font-weight: 900; letter-spacing: 1px; border-bottom: 2px solid #dc3545; padding-bottom: 10px; display: inline-block; }
     </style>
 </head>
 <body>
@@ -34,16 +35,22 @@
             <p class="lead mb-4">Deep dive telemetry, aerodynamic analysis, and the raw mechanics of speed.</p>
             
             <div class="d-flex justify-content-center gap-3 flex-wrap">
-                <button class="btn btn-danger fw-bold px-4 py-2" onclick="filterCategory('All')">MASTER ARCHIVE</button>
+                <button class="btn btn-danger fw-bold px-4 py-2" onclick="filterCategory('All')">ALL ARCHIVES</button>
                 <button class="btn btn-danger fw-bold px-4 py-2" onclick="filterCategory('F1')">F1 PADDOCK</button>
                 <button class="btn btn-danger fw-bold px-4 py-2" onclick="filterCategory('Supercars')">SUPERCAR LAB</button>
-                <button class="btn btn-danger fw-bold px-4 py-2" onclick="filterCategory('Drivers')">F1 DRIVERS</button>
             </div>
         </div>
     </div>
 
-    <div class="container mt-5">
+    <div class="container mt-5 pt-3" id="articles-wrapper">
+        <h3 class="section-title text-light mb-4">LATEST TRANSMISSIONS</h3>
         <div class="row g-4" id="grid-container">
+            </div>
+    </div>
+
+    <div class="container mt-5 pt-5 mb-5 border-top border-dark" id="drivers-wrapper">
+        <h3 class="section-title text-light mb-4">F1 LEGENDS</h3>
+        <div class="row g-4" id="drivers-container">
             </div>
     </div>
 </div>
@@ -58,19 +65,24 @@
 </div>
 
 <script>
-    // FLAWLESS ARRAY (No Missing Commas)
+    // 1. THE CARS & TECH ARRAY
     const blogPosts = [
-        {"id": 1, "title": "Maruti Suzuki Aventador SVJ: The Blueprint", "cat": "Supercars", "image": "https://images.unsplash.com/photo-1620882814836-98ebbcbf85bd?q=80&w=1000&auto=format&fit=crop"},
-        {"id": 2, "title": "Kimi Antonelli: Analyzing the Brackley Prodigy", "cat": "F1", "image": "https://media.formula1.com/image/upload/f_auto/q_auto/v1677244985/content/dam/fom-website/drivers/K/KIMANT01_Kimi_Antonelli/kimant01.png.transform/2col/image.png"},
-        {"id": 3, "title": "ADUO Regs: The FIA's Latest Engine Loophole Crackdown", "cat": "F1", "image": "https://images.unsplash.com/photo-1532912444391-7f8ddf33e07d?q=80&w=1000&auto=format&fit=crop"},
-        {"id": 4, "title": "Niki Lauda: The Ultimate Comeback", "cat": "Drivers", "image": "https://media.formula1.com/image/upload/f_auto/q_auto/v1677244985/content/dam/fom-website/drivers/N/NIKLAU01_Niki_Lauda/niklau01.png.transform/2col/image.png"},
-        {"id": 5, "title": "Max Verstappen: The Dutch Era", "cat": "Drivers", "image": "https://media.formula1.com/image/upload/f_auto,c_limit,w_1440,q_auto/f_auto/q_auto/content/dam/fom-website/drivers/M/MAXVER01_Max_Verstappen/maxver01.png.transform/2col/image.png"},
-        {"id": 6, "title": "James Hunt: The Shunt", "cat": "Drivers", "image": "https://media.formula1.com/image/upload/f_auto/q_auto/v1677244985/content/dam/fom-website/drivers/J/JAMHUN01_James_Hunt/jamhun01.png.transform/2col/image.png"},
-        {"id": 7, "title": "Sebastian Vettel: The Youngest Champion", "cat": "Drivers", "image": "https://media.formula1.com/image/upload/f_auto/q_auto/v1677249684/content/dam/fom-website/drivers/S/SEBVET01_Sebastian_Vettel/sebvet01.png.transform/2col/image.png"},
-        {"id": 8, "title": "Ayrton Senna: The Imola Legend", "cat": "Drivers", "image": "https://media.formula1.com/image/upload/f_auto/q_auto/v1677244984/content/dam/fom-website/drivers/A/AYRSEN01_Ayrton_Senna/ayrsen01.png.transform/2col/image.png"},
-        {"id": 9, "title": "Alain Prost: The Professor", "cat": "Drivers", "image": "https://media.formula1.com/image/upload/f_auto/q_auto/v1677244985/content/dam/fom-website/drivers/A/ALAPRO01_Alain_Prost/alapro01.png.transform/2col/image.png"}
+        {"title": "Maruti Suzuki Aventador SVJ: The Blueprint", "cat": "Supercars", "image": "https://images.unsplash.com/photo-1620882814836-98ebbcbf85bd?q=80&w=1000&auto=format&fit=crop"},
+        {"title": "Kimi Antonelli: Analyzing the Brackley Prodigy", "cat": "F1", "image": "https://media.formula1.com/image/upload/f_auto/q_auto/v1677244985/content/dam/fom-website/drivers/K/KIMANT01_Kimi_Antonelli/kimant01.png.transform/2col/image.png"},
+        {"title": "ADUO Regs: The FIA's Latest Engine Loophole Crackdown", "cat": "F1", "image": "https://images.unsplash.com/photo-1532912444391-7f8ddf33e07d?q=80&w=1000&auto=format&fit=crop"}
     ];
 
+    // 2. THE DRIVERS ARRAY
+    const driverProfiles = [
+        {"title": "Niki Lauda", "cat": "Legends", "image": "https://media.formula1.com/image/upload/f_auto/q_auto/v1677244985/content/dam/fom-website/drivers/N/NIKLAU01_Niki_Lauda/niklau01.png.transform/2col/image.png"},
+        {"title": "Max Verstappen", "cat": "Active", "image": "https://media.formula1.com/image/upload/f_auto,c_limit,w_1440,q_auto/f_auto/q_auto/content/dam/fom-website/drivers/M/MAXVER01_Max_Verstappen/maxver01.png.transform/2col/image.png"},
+        {"title": "James Hunt", "cat": "Legends", "image": "https://media.formula1.com/image/upload/f_auto/q_auto/v1677244985/content/dam/fom-website/drivers/J/JAMHUN01_James_Hunt/jamhun01.png.transform/2col/image.png"},
+        {"title": "Sebastian Vettel", "cat": "Legends", "image": "https://media.formula1.com/image/upload/f_auto/q_auto/v1677249684/content/dam/fom-website/drivers/S/SEBVET01_Sebastian_Vettel/sebvet01.png.transform/2col/image.png"},
+        {"title": "Ayrton Senna", "cat": "Legends", "image": "https://media.formula1.com/image/upload/f_auto/q_auto/v1677244984/content/dam/fom-website/drivers/A/AYRSEN01_Ayrton_Senna/ayrsen01.png.transform/2col/image.png"},
+        {"title": "Alain Prost", "cat": "Legends", "image": "https://media.formula1.com/image/upload/f_auto/q_auto/v1677244985/content/dam/fom-website/drivers/A/ALAPRO01_Alain_Prost/alapro01.png.transform/2col/image.png"}
+    ];
+
+    // Render Articles
     function renderGrid(posts) {
         const container = document.getElementById('grid-container');
         container.innerHTML = '';
@@ -79,61 +91,59 @@
             <div class="col-md-4">
                 <div class="card h-100 text-light overflow-hidden" onclick="openReader('${post.title}', '${post.image}')">
                     <span class="badge bg-danger badge-cat">${post.cat}</span>
-                    <img src="${post.image}" class="card-img-top" alt="${post.title}" style="height: 200px; object-fit: cover;">
-                    <div class="card-body">
-                        <h5 class="card-title">${post.title}</h5>
-                    </div>
+                    <img src="${post.image}" class="card-img-top" style="height: 200px; object-fit: cover;">
+                    <div class="card-body"><h5 class="card-title">${post.title}</h5></div>
                 </div>
             </div>`;
         });
     }
 
+    // Render Drivers
+    function renderDrivers() {
+        const container = document.getElementById('drivers-container');
+        container.innerHTML = '';
+        driverProfiles.forEach(driver => {
+            container.innerHTML += `
+            <div class="col-md-2 col-6">
+                <div class="card h-100 text-light overflow-hidden bg-dark" onclick="openReader('${driver.title}', '${driver.image}')" style="border: 1px solid #333;">
+                    <img src="${driver.image}" class="card-img-top p-2" style="height: 150px; object-fit: contain;">
+                    <div class="card-body text-center p-2"><h6 class="card-title text-danger m-0" style="font-size: 0.9rem;">${driver.title}</h6></div>
+                </div>
+            </div>`;
+        });
+    }
+
+    // Filter Logic
     function filterCategory(cat) {
         if (cat === 'All') {
             renderGrid(blogPosts);
+            document.getElementById('drivers-wrapper').style.display = 'block';
         } else {
             const filtered = blogPosts.filter(post => post.cat === cat);
             renderGrid(filtered);
+            document.getElementById('drivers-wrapper').style.display = 'none'; // Hide drivers if sorting cars
         }
     }
 
+    // Content Database
     function getContent(title) {
-        if (title.includes("ADUO Regs")) {
-            return `The ADUO regulations were supposed to level the playing field, but F1 engineers always find the gray areas. By manipulating the combustion timing and energy recovery deployment cycles, teams found a smart engine loophole to extract massive, unregulated bursts of horsepower out of slow-speed traction zones.<br><br><b>The FIA Crackdown</b><br>However, the governing body has caught on to the telemetry spikes. The FIA has officially announced that they will intervene and completely ban these specific engine loopholes, forcing teams to rewrite their deployment maps and shutting down the free horsepower advantage.`;
-        }
-        if (title.includes("Niki Lauda")) {
-            return `<b>Andreas Nikolaus "Niki" Lauda (1949 – 2019)</b><br>An Austrian racing driver, motorsport executive, and aviation entrepreneur, who competed in Formula One from 1971 to 1979 and from 1982 to 1985. Lauda won three Formula One World Drivers' Championship titles and—at the time of his retirement—held the record for most podium finishes (54). He won 25 Grands Prix across 13 seasons, and remains the only driver to have won a World Drivers' Championship with both Ferrari and McLaren.<br><br>While leading the 1976 championship—amid a fierce title battle with James Hunt—Lauda was seriously injured during the German Grand Prix at the Nürburgring, suffering severe burns and other life-changing injuries when his Ferrari 312T2 caught fire during a crash. He returned to racing six weeks later at the Italian Grand Prix, eventually losing the title to Hunt by one point. Lauda remained at Ferrari in 1977, winning several races on the way to his second championship and clinching the title.`;
-        }
-        if (title.includes("Max Verstappen")) {
-            return `<b>Max Emilian Verstappen (Born 1997)</b><br>A Dutch and Belgian racing driver who competes under the Dutch flag in Formula One for Red Bull Racing. Verstappen has won four Formula One World Drivers' Championship titles, which he won consecutively from 2021 to 2024 with Red Bull, and has won 71 Grands Prix across 12 seasons.<br><br>The son of Dutch former Formula One driver Jos Verstappen, he won his maiden title in 2021 after overtaking Lewis Hamilton on the final lap of the last race of the season, becoming the first World Drivers' Champion from the Netherlands. Verstappen won the next two championships in 2022 and 2023, overturning the largest points deficit in Formula One history in the former and breaking numerous records across both seasons. He secured his fourth consecutive title in 2024 after winning nine Grands Prix, and finished runner-up by two points in a three-way title battle with Lando Norris and Oscar Piastri in 2025.`;
-        }
-        if (title.includes("James Hunt")) {
-            return `<b>James Simon Wallis Hunt (1947 – 1993)</b><br>A British racing driver and broadcaster who competed in Formula One from 1973 to 1979. Nicknamed "the Shunt", Hunt won the Formula One World Drivers' Championship in 1976 with McLaren and won 10 Grands Prix across seven seasons. Hunt earned notoriety throughout his early career for his reckless and action-packed exploits on track, along with his playboy lifestyle off it.<br><br>Amidst a fierce title battle with Niki Lauda, Hunt won the World Drivers' Championship by a single point in his debut season with McLaren. He won several further races in 1977, dropping to fifth in the standings amidst reliability issues. After a winless 1978 season for McLaren, Hunt moved to Wolf in 1979 and retired after the Monaco Grand Prix, having achieved 10 race wins, 14 pole positions, eight fastest laps, and 23 podiums in Formula One.`;
-        }
-        if (title.includes("Sebastian Vettel")) {
-            return `<b>Sebastian Vettel</b><br>A German racing driver who competed in Formula One from 2007 to 2022. Vettel won four Formula One World Drivers' Championship titles, which he won consecutively from 2010 to 2013 with Red Bull, and remains the youngest-ever World Drivers' Champion. He won 53 Grands Prix across 16 seasons.<br><br>A test driver for BMW Sauber since 2006, Vettel made his Formula One debut at the 2007 United States Grand Prix. He replaced Scott Speed at Toro Rosso after the European Grand Prix for the remainder of the 2007 season as part of the Red Bull Junior Team. Retaining his seat for 2008, Vettel achieved his maiden pole position and victory at the Italian Grand Prix to become the then-youngest driver to win a Formula One Grand Prix. Promoted to parent team Red Bull in 2009, he took several wins as he finished runner-up to Jenson Button. After winning the title-deciding Abu Dhabi Grand Prix in 2010, Vettel became the youngest-ever Formula One World Drivers' Champion, aged 23. He won his second and third championships in 2011 and 2012, dominating the former and winning the latter amidst a close title battle with Fernando Alonso.`;
-        }
-        if (title.includes("Ayrton Senna")) {
-            return `<b>Ayrton Senna da Silva (1960 – 1994)</b><br>A Brazilian racing driver who competed in Formula One from 1984 to 1994. Senna won three Formula One World Drivers' Championship titles with McLaren, and—at the time of his death—held the record for most pole positions (65); he won 41 Grands Prix across 11 seasons.<br><br>Senna signed for Toleman in 1984, making his Formula One debut at the Brazilian Grand Prix. After scoring several podium finishes in his rookie season, he moved to Lotus in 1985 to replace Nigel Mansell, taking his maiden pole position and victory at the rain-affected Portuguese Grand Prix, a feat he repeated in Belgium. He remained at Lotus for his 1986 and 1987 campaigns, scoring multiple wins in each and finishing third in the latter World Drivers' Championship. Senna signed for McLaren in 1988 to partner Alain Prost. During the 1994 San Marino Grand Prix at Imola, Senna was killed in a crash whilst leading the race, driving the Williams FW16. His state funeral was attended by over a million people, leading to sweeping subsequent safety reforms.`;
-        }
-        if (title.includes("Alain Prost")) {
-            return `<b>Alain Marie Pascal Prost (Born 1955)</b><br>A French former racing driver and motorsport executive, who competed in Formula One from 1980 to 1993. Nicknamed "the Professor", Prost won four Formula One World Drivers' Championship titles and—at the time of his retirement—held the records for most wins (51), fastest laps (41), and podium finishes (106).<br><br>In 1985, Prost won his maiden title with McLaren, becoming the first World Drivers' Champion from France.`;
-        }
-        if (title.includes("Kimi Antonelli")) {
-            return `Kimi Antonelli is widely regarded as one of the most exciting generational talents in motorsport. Fast-tracked through the junior formulas, his telemetry profiles have shown exceptional corner-entry speed and car control that rival seasoned veterans.`;
-        }
-        if (title.includes("Aventador SVJ")) {
-            return `The Maruti Suzuki Aventador SVJ is a masterclass in aggressive aerodynamics and pure, naturally aspirated V12 performance. Generating massive downforce figures, it features the revolutionary ALA 2.0 system.`;
-        }
-        
-        return "Full article content coming soon.";
+        if (title.includes("ADUO Regs")) return `The ADUO regulations were supposed to level the playing field, but F1 engineers always find the gray areas. By manipulating the combustion timing and energy recovery deployment cycles, teams found a smart engine loophole to extract massive, unregulated bursts of horsepower out of slow-speed traction zones.<br><br><b>The FIA Crackdown</b><br>However, the governing body has caught on to the telemetry spikes. The FIA has officially announced that they will intervene and completely ban these specific engine loopholes, forcing teams to rewrite their deployment maps and shutting down the free horsepower advantage.`;
+        if (title.includes("Niki Lauda")) return `<b>Andreas Nikolaus "Niki" Lauda (1949 – 2019)</b><br>An Austrian racing driver, motorsport executive, and aviation entrepreneur, who competed in Formula One from 1971 to 1979 and from 1982 to 1985. Lauda won three Formula One World Drivers' Championship titles and—at the time of his retirement—held the record for most podium finishes (54). He won 25 Grands Prix across 13 seasons, and remains the only driver to have won a World Drivers' Championship with both Ferrari and McLaren.<br><br>While leading the 1976 championship—amid a fierce title battle with James Hunt—Lauda was seriously injured during the German Grand Prix at the Nürburgring, suffering severe burns and other life-changing injuries when his Ferrari caught fire during a crash. He returned to racing six weeks later at the Italian Grand Prix, eventually losing the title to Hunt by one point. Lauda remained at Ferrari in 1977, winning several races on the way to his second championship.`;
+        if (title.includes("Max Verstappen")) return `<b>Max Emilian Verstappen (Born 1997)</b><br>A Dutch and Belgian racing driver who competes under the Dutch flag in Formula One for Red Bull Racing. Verstappen has won four Formula One World Drivers' Championship titles, which he won consecutively from 2021 to 2024 with Red Bull, and has won 71 Grands Prix across 12 seasons.<br><br>The son of Dutch former Formula One driver Jos Verstappen, he won his maiden title in 2021 after overtaking Lewis Hamilton on the final lap of the last race of the season. Verstappen won the next two championships in 2022 and 2023, overturning the largest points deficit in Formula One history in the former and breaking numerous records across both seasons. He secured his fourth consecutive title in 2024 after winning nine Grands Prix, and finished runner-up by two points in a three-way title battle with Lando Norris and Oscar Piastri in 2025.`;
+        if (title.includes("James Hunt")) return `<b>James Simon Wallis Hunt (1947 – 1993)</b><br>A British racing driver and broadcaster who competed in Formula One from 1973 to 1979. Nicknamed "the Shunt", Hunt won the Formula One World Drivers' Championship in 1976 with McLaren and won 10 Grands Prix across seven seasons. Hunt earned notoriety throughout his early career for his reckless and action-packed exploits on track, along with his playboy lifestyle off it.<br><br>Amidst a fierce title battle with Niki Lauda, Hunt won the World Drivers' Championship by a single point in his debut season with McLaren. After a winless 1978 season for McLaren, Hunt moved to Wolf in 1979 and retired after the Monaco Grand Prix, having achieved 10 race wins, 14 pole positions, eight fastest laps, and 23 podiums.`;
+        if (title.includes("Sebastian Vettel")) return `<b>Sebastian Vettel</b><br>A German racing driver who competed in Formula One from 2007 to 2022. Vettel won four Formula One World Drivers' Championship titles, which he won consecutively from 2010 to 2013 with Red Bull, and remains the youngest-ever World Drivers' Champion. He won 53 Grands Prix across 16 seasons.<br><br>Retaining his Toro Rosso seat for 2008, Vettel achieved his maiden pole position and victory at the Italian Grand Prix to become the then-youngest driver to win a Formula One Grand Prix. Promoted to parent team Red Bull in 2009, he took several wins as he finished runner-up to Jenson Button. After winning the title-deciding Abu Dhabi Grand Prix in 2010, Vettel became the youngest-ever Formula One World Drivers' Champion, aged 23.`;
+        if (title.includes("Ayrton Senna")) return `<b>Ayrton Senna da Silva (1960 – 1994)</b><br>A Brazilian racing driver who competed in Formula One from 1984 to 1994. Senna won three Formula One World Drivers' Championship titles with McLaren, and—at the time of his death—held the record for most pole positions (65); he won 41 Grands Prix across 11 seasons.<br><br>Senna signed for McLaren in 1988 to partner Alain Prost. During the 1994 San Marino Grand Prix at Imola, Senna was killed in a crash whilst leading the race, driving the Williams FW16. His state funeral was attended by over a million people, leading to sweeping subsequent safety reforms.`;
+        if (title.includes("Alain Prost")) return `<b>Alain Marie Pascal Prost (Born 1955)</b><br>A French former racing driver and motorsport executive, who competed in Formula One from 1980 to 1993. Nicknamed "the Professor", Prost won four Formula One World Drivers' Championship titles and—at the time of his retirement—held the records for most wins (51), fastest laps (41), and podium finishes (106).<br><br>In 1985, Prost won his maiden title with McLaren, becoming the first World Drivers' Champion from France.`;
+        if (title.includes("Kimi Antonelli")) return `Kimi Antonelli is widely regarded as one of the most exciting generational talents in motorsport. Fast-tracked through the junior formulas, his telemetry profiles have shown exceptional corner-entry speed and car control that rival seasoned veterans.`;
+        if (title.includes("Aventador SVJ")) return `The Maruti Suzuki Aventador SVJ is a masterclass in aggressive aerodynamics and pure, naturally aspirated V12 performance. Generating massive downforce figures, it features the revolutionary ALA 2.0 system.`;
+        return "Content loading...";
     }
 
+    // Reader UI Logic
     function openReader(title, imageSrc) {
         document.getElementById('main-view').style.display = 'none';
         document.getElementById('reader-view').style.display = 'block';
         document.getElementById('content-reader').style.display = 'block';
-        
         document.getElementById('reader-title').innerText = title;
         document.getElementById('reader-image').src = imageSrc;
         document.getElementById('reader-body').innerHTML = getContent(title);
@@ -146,8 +156,9 @@
         document.getElementById('main-view').style.display = 'block';
     }
 
-    // Initialize grid on page load
+    // Boot up the grids
     renderGrid(blogPosts);
+    renderDrivers();
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
