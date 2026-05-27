@@ -3,160 +3,218 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    
     <meta name="google-site-verification" content="DuDfJ88tjBjyCR5xttbIUU4ZP0PENWgawbM3bxA3F30" />
-    <title>THE APEX | Motorsport & Engineering</title>
+    
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3156540550573499" crossorigin="anonymous"></script>
+    
+    <title>THE APEX | F1 Tech & Supercar Radar</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body { background-color: #121212; color: #f8f9fa; font-family: 'Helvetica Neue', sans-serif; }
-        .navbar { border-bottom: 2px solid #dc3545; }
-        .navbar-brand { font-weight: 900; letter-spacing: 2px; }
-        .card { background-color: #1e1e1e; border: none; transition: transform 0.2s; cursor: pointer; }
-        .card:hover { transform: translateY(-5px); }
-        .card-title { font-weight: bold; }
-        .badge-cat { position: absolute; top: 10px; right: 10px; font-size: 0.8rem; padding: 5px 10px; }
-        #content-reader { display: none; background: #1e1e1e; padding: 30px; border-radius: 10px; margin-top: 20px; }
-        .btn-danger { background-color: #dc3545; border: none; }
-        .hero-section { background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), url('https://images.unsplash.com/photo-1614200187524-dc4b892acf16?q=80&w=2000&auto=format&fit=crop') center/cover; padding: 100px 0; }
+        :root { --f1-red: #e10600; --dark-bg: #050505; --card-bg: #111; }
+        body { background: var(--dark-bg); color: #eee; font-family: 'Inter', sans-serif; line-height: 1.8; }
+        .hero { background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('https://media.formula1.com/image/upload/t_16by9North/c_lfill,w_3392/q_auto/v1740000001/fom-website/2025/Mexico/GettyImages-2243232001.webp'); background-size: cover; padding: 130px 20px; text-align: center; border-bottom: 5px solid var(--f1-red); }
+        .hero h1 { font-size: 5rem; font-weight: 900; text-transform: uppercase; margin: 0; }
+        .nav-bar { background: #000; padding: 25px; text-align: center; border-bottom: 1px solid #222; position: sticky; top: 0; z-index: 1000; }
+        .nav-btn { background: var(--f1-red); color: #fff; border: none; padding: 12px 24px; margin: 5px; text-decoration: none; display: inline-block; font-weight: 800; border-radius: 4px; font-size: 0.75rem; text-transform: uppercase; cursor: pointer; }
+        .card { background: var(--card-bg); border: 1px solid #222; margin-bottom: 40px; transition: 0.4s; border-radius: 12px; overflow: hidden; }
+        .card:hover { transform: translateY(-8px); border-color: var(--f1-red); }
+        .card img { width: 100%; height: 260px; object-fit: cover; border-bottom: 4px solid var(--f1-red); }
+        .article-body { font-size: 1.25rem; color: #ddd; white-space: pre-line; text-align: justify; }
+        .pit-wall { background: #111; border: 1px solid #222; padding: 40px; margin-top: 60px; border-radius: 8px; }
+        .pit-input { background: #050505; border: 1px solid #333; color: #fff; width: 100%; padding: 15px; margin-bottom: 20px; border-radius: 4px; }
+        footer { padding: 80px 20px; text-align: center; background: #000; border-top: 1px solid #222; color: #666; }
+        footer a { color: #888; text-decoration: none; margin: 0 15px; font-weight: bold; cursor: pointer; }
     </style>
 </head>
 <body>
 
-<nav class="navbar navbar-dark bg-dark py-3">
-    <div class="container">
-        <a class="navbar-brand text-danger fs-3" href="#">THE APEX</a>
+    <div class="nav-bar">
+        <span class="nav-btn" onclick="renderHome()">Home</span>
+        <span class="nav-btn" onclick="renderCategory('F1')">F1 Paddock</span>
+        <span class="nav-btn" onclick="renderCategory('Reviews')">Supercar Lab</span>
+        <span class="nav-btn" onclick="renderArchive()" style="background: #222; border: 1px solid var(--f1-red);">MASTER ARCHIVE</span>
     </div>
-</nav>
 
-<div id="main-view">
-    <div class="hero-section text-center">
-        <div class="container">
-            <h1 class="display-4 fw-bold">UNCOMPROMISED MOTORSPORT ENGINEERING</h1>
-            <p class="lead mb-4">Deep dive telemetry, aerodynamic analysis, and the raw mechanics of speed.</p>
-            
-            <div class="d-flex justify-content-center gap-3 flex-wrap">
-                <button class="btn btn-dark fw-bold px-4 py-2" onclick="filterCategory('All')">MASTER ARCHIVE</button>
-                <button class="btn btn-danger fw-bold px-4 py-2" onclick="filterCategory('F1')">F1 PADDOCK</button>
-                <button class="btn btn-danger fw-bold px-4 py-2" onclick="filterCategory('Supercars')">SUPERCAR LAB</button>
-                <button class="btn btn-danger fw-bold px-4 py-2" onclick="filterCategory('Drivers')">F1 DRIVERS</button>
-            </div>
+    <div id="main-content"></div>
+
+    <footer>
+        <div class="mb-4">
+            <a onclick="renderHome()">Home</a>
+            <a onclick="renderArchive()">Master Archive</a>
+            <a onclick="renderPrivacy()">Privacy Policy</a>
+            <a onclick="renderTerms()">Terms & Conditions</a>
+            <a onclick="renderContact()">Contact Cockpit</a>
         </div>
-    </div>
+        <p>THE APEX &copy; 2026 | GURUGRAM | BUILT FOR THE CAR NERDS</p>
+    </footer>
 
-    <div class="container mt-5 mb-5">
-        <div class="row g-4" id="main-grid"></div>
+    <script>
+        const blogPosts = [
+            {"id": 0, "title": "WELCOME TO THE APEX", "cat": "Daily", "image": "https://parkplus-bkt-img.parkplus.io/production/chariot_staging/public/steeringwheel54jpgimage_20230808192212588541.jpg"},
+            {"id": 1, "title": "Kimi Antonelli: The Rise of a Generational Prodigy", "cat": "F1", "image": "https://media.formula1.com/image/upload/t_16by9North/c_lfill,w_3392/q_auto/v1740000001/fom-website/2025/Mexico/GettyImages-2243232001.webp"},
+            {"id": 2, "title": "Aston Martin Valhalla: Floor-Effect Masterclass", "cat": "Reviews", "image": "https://www.team-bhp.com/sites/default/files/styles/check_extra_large_for_review/public/aston-martin-valhalla-1.jpg"},
+            {"id": 4, "title": "Bugatti Tourbillon: That Glorious V16 Engine", "cat": "Reviews", "image": "https://www.topgear.com/sites/default/files/2024/06/Bugatti-Tourbillon-01.jpg"},
+            {"id": 3, "title": "Ferrari SF-26: The New 2026 Weapon", "cat": "F1", "image": "https://cdn.ferrari.com/cms/network/media/img/resize/6971dcf98b556d0021ddb96f-ferrari-sf-26-official-page-cover-desk-2?width=1440&height=900"},
+            {"id": 5, "title": "ADUO Regs: The Smart Engine Loophole", "cat": "F1", "image": "https://media.formula1.com/image/upload/c_lfill,w_3392/q_auto/v1740000001/fom-website/2025/Miscellaneous/GettyImages-2169727936.webp"},
+            {"id": 6, "title": "Red Bull Ford 2026: Power Unit Secrets", "cat": "F1", "image": "https://img.redbull.com/images/c_limit,w_1500,h_1000/f_auto,q_auto/redbullcom/2026/1/16/xw92o03xxkku3fs3ees4/oracle-red-bull-racing-2026-livery-launch-michigan-detroit-max-verstappen"},
+            {"id": 7, "title": "Lewis Hamilton: The Ferrari SF-26 Red Synergy", "cat": "F1", "image": "https://cdn-8.motorsport.com/images/amp/68yGx840/s6/lewis-hamilton-ferrari-sf-25-3.jpg"},
+            {"id": 8, "title": "Aventador SVJ: Bending Physics with ALA 2.0", "cat": "Reviews", "image": "https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/news/Meet%20Aventador/Cover.jpg"},
+            {"id": 9, "title": "McLaren W1: The Extreme Successor", "cat": "Reviews", "image": "https://hips.hearstapps.com/mtg-prod/6701d85fa0855d0008fea61c/mclaren-w1-3.jpg"},
+            {"id": 10, "title": "Porsche GT3 RS: Pure DRS Logic Explained", "cat": "Reviews", "image": "https://a.storyblok.com/f/322327/1700x1300/dbca0a4fd0/cz23v20ox0040-911-gt3-rs-front.jpg"},
+            {"id": 11, "title": "Ground Effect: The Magic of Venturi Tunnels", "cat": "F1", "image": "https://d3535lqr6sqxto.cloudfront.net/blogs/bHdRK0P9Rn5vZnmdidH1wkSoZsAB4BoC1uYLtVmk.jpeg"},
+            {"id": 12, "title": "F1 2026: 100% Sustainable Fuels Are Coming", "cat": "Daily", "image": "https://media.formula1.com/image/upload/t_16by9Centre/c_lfill,w_3392/q_auto/v1740000001/fom-website/campaign/ESG/Aramco%20advanced%20fuel.webp"}
+        ];
 
-        <h3 id="drivers-title" class="mt-5 mb-4 fw-bold text-light border-bottom border-danger pb-2" style="display: none;">F1 LEGENDS</h3>
-        <div class="row g-4" id="drivers-grid"></div>
-    </div>
-</div>
+        function getContent(title) {
+            if (title.toUpperCase().includes("WELCOME")) {
+                return `Welcome to THE APEX—a digital notebook, racing journal, and performance archive built entirely for the hardcore car nerds and paddock lifers. This platform exists because looking at a car from the outside is never enough; we want to understand the mechanical soul, the aerodynamics, and the human grit that pushes these machines to the ragged edge.
 
-<div class="container pb-5" id="reader-view" style="display: none;">
-    <button class="btn btn-outline-light mb-4 mt-4" onclick="closeReader()">← Back to Grid</button>
-    <div id="content-reader">
-        <img id="reader-image" src="" class="img-fluid rounded mb-4" style="max-height: 500px; width: 100%; object-fit: cover;">
-        <h1 id="reader-title" class="fw-bold mb-3"></h1>
-        <div id="reader-body" class="fs-5" style="line-height: 1.8;"></div>
-    </div>
-</div>
+                What do we cover here? Everything that sets an enthusiast's mind on fire. From the complex aerodynamics of ground-effect venturi tunnels to the pure engineering genius of Bugatti's new V16 engine, we break down the science of speed without the dry, boring textbook language. We cover F1 technical updates, deep-dive hypercar reviews, analog manual gearboxes, and the raw dynamics of suspension geometry. If it makes a car faster, louder, or more rewarding to drive, it gets a dossier on this grid.
 
-<script>
-    const blogPosts = [
-        
-        // ==========================================
-        // PASTE YOUR 22 ORIGINAL POSTS HERE
-        // ==========================================
-        
-        // Example: {"title": "F1 2026: Active Aero Modes", "cat": "F1", "image": "YOUR_LINK"},
+                About the founder: THE APEX was created by Avyay Jha, an active car enthusiast and petrolhead who lives for high-performance engineering. Whether it's dissecting the active aerodynamics of a Lamborghini Aventador SVJ, tracking the extreme limits of a McLaren track weapon, or following the psychological chess match of the F1 paddock, this archive is a reflection of a personal obsession with automotive evolution. This is a space built by a car nerd, for car nerds. Welcome to the grid.`;
+            }
 
-        // ==========================================
-        // LEAVE THESE DRIVERS AT THE BOTTOM
-        // ==========================================
-        {"title": "Niki Lauda: The Ultimate Comeback", "cat": "Drivers", "image": "https://media.formula1.com/image/upload/f_auto/q_auto/v1677244985/content/dam/fom-website/drivers/N/NIKLAU01_Niki_Lauda/niklau01.png.transform/2col/image.png"},
-        {"title": "Max Verstappen: The Dutch Era", "cat": "Drivers", "image": "https://media.formula1.com/image/upload/f_auto,c_limit,w_1440,q_auto/f_auto/q_auto/content/dam/fom-website/drivers/M/MAXVER01_Max_Verstappen/maxver01.png.transform/2col/image.png"},
-        {"title": "James Hunt: The Shunt", "cat": "Drivers", "image": "https://media.formula1.com/image/upload/f_auto/q_auto/v1677244985/content/dam/fom-website/drivers/J/JAMHUN01_James_Hunt/jamhun01.png.transform/2col/image.png"},
-        {"title": "Sebastian Vettel: The Youngest Champion", "cat": "Drivers", "image": "https://media.formula1.com/image/upload/f_auto/q_auto/v1677249684/content/dam/fom-website/drivers/S/SEBVET01_Sebastian_Vettel/sebvet01.png.transform/2col/image.png"},
-        {"title": "Ayrton Senna: The Imola Legend", "cat": "Drivers", "image": "https://media.formula1.com/image/upload/f_auto/q_auto/v1677244984/content/dam/fom-website/drivers/A/AYRSEN01_Ayrton_Senna/ayrsen01.png.transform/2col/image.png"},
-        {"title": "Alain Prost: The Professor", "cat": "Drivers", "image": "https://media.formula1.com/image/upload/f_auto/q_auto/v1677244985/content/dam/fom-website/drivers/A/ALAPRO01_Alain_Prost/alapro01.png.transform/2col/image.png"}
-    ];
+            if (title.includes("Antonelli") || title.includes("Hamilton") || title.includes("Wolff")) {
+                return `The real human drama of Formula 1 completely takes over when you look at the story behind ${title}. We can argue about sidepod packaging and floor edge stiffness all weekend, but when the lights go out, the most volatile, unpredictable element in the cockpit is always the driver wrestling the machine. 
 
-    function createCardHTML(post) {
-        // This is your EXACT original card layout and 200px styling
-        return `
-        <div class="col-md-4">
-            <div class="card h-100 text-light overflow-hidden" onclick="openReader('${post.title}', '${post.image}')">
-                <span class="badge bg-danger badge-cat">${post.cat}</span>
-                <img src="${post.image}" class="card-img-top" style="height: 200px; object-fit: cover;">
-                <div class="card-body">
-                    <h5 class="card-title">${post.title}</h5>
-                </div>
-            </div>
-        </div>`;
-    }
+                Take Kimi Antonelli—you are watching the explosive arrival of a true generational prodigy. Skipping F3 entirely isn't just a bold move; it's a massive statement of intent by Mercedes. The paddock is completely transfixed by this kid because his raw junior telemetry shows a level of corner-entry commitment and wet-weather feel that you simply cannot teach. Straining against massive G-forces while keeping a modern F1 car balanced on a knife-edge requires insane psychological armor, especially when you're stepping directly into the shadow of a legend. Antonelli represents the shifting of the guard, a hyper-focused rookie built for pure, unadulterated lap time.
 
-    function filterCategory(cat) {
-        const mainGrid = document.getElementById('main-grid');
-        const driversGrid = document.getElementById('drivers-grid');
-        const driversTitle = document.getElementById('drivers-title');
+                And then you look across the paddock at the seismic reality of Lewis Hamilton strapping into a Scuderia Ferrari. That isn't a standard career move; it's an existential quest for motorsport immortality. Hamilton leaving his lifelong Mercedes comfort zone to face the absolute colosseum of Maranello shows the kind of unyielding competitive fire that defines an icon. He’s stepping into the eye of the storm under the intense pressure of the Tifosi, proving that the human spirit and raw racing instinct still dictate the grid, even in an era dominated by computer simulations.
 
-        mainGrid.innerHTML = '';
-        driversGrid.innerHTML = '';
+                The cars are spectacular engineering triumphs, but it’s the driver’s split-second, high-stakes reflexes and the mental resilience to push through political paddock static that turn these racers into heroes. That’s what sets our car nerd minds on fire.`;
+            }
 
-        if (cat === 'All') {
-            driversTitle.style.display = 'block';
-            const mainPosts = blogPosts.filter(post => post.cat !== 'Drivers');
-            const driverPosts = blogPosts.filter(post => post.cat === 'Drivers');
-            
-            mainPosts.forEach(post => mainGrid.innerHTML += createCardHTML(post));
-            driverPosts.forEach(post => driversGrid.innerHTML += createCardHTML(post));
-            
-        } else if (cat === 'Drivers') {
-            driversTitle.style.display = 'block';
-            const driverPosts = blogPosts.filter(post => post.cat === 'Drivers');
-            driverPosts.forEach(post => driversGrid.innerHTML += createCardHTML(post));
-            
-        } else {
-            driversTitle.style.display = 'none';
-            const filteredPosts = blogPosts.filter(post => post.cat === cat);
-            filteredPosts.forEach(post => mainGrid.innerHTML += createCardHTML(post));
+            let intro = `The sheer engineering execution behind the ${title} represents an absolute weapon built for those who live for mind-bending performance.`;
+            if (title.includes("Bugatti")) intro = `The absolute madness of the ${title} proves that the mechanical internal combustion engine isn't going down without a spectacular, high-RPM fight.`;
+            if (title.includes("Aventador")) intro = `When you watch the ${title} tear up a circuit, you are looking at a masterclass in aggressive engineering and raw, active aerodynamic manipulation.`;
+            if (title.includes("McLaren")) intro = `The development path of the ${title} shows exactly what happens when a design team becomes completely obsessed with lightweight track violence.`;
+
+            return `${intro} If you are a petrolhead who lives for cutting-edge dynamics, this is exactly where design hits pure, sanity-testing speed. We aren't just looking at generic zero-to-hundred stats or glossy body panels here; we are dissecting the actual backbone of the machine.
+
+            Let's talk about the cornering dynamics. The engineers have dialed in the suspension kinematics to aggressively fight off lateral loading. When you drop this beast into a high-speed apex, the structural stiffness keeps the contact patches completely glued to the tarmac. With virtually zero body roll, you get immediate mechanical feedback and the kind of steering precision that makes you feel connected directly to the hub carriers.
+
+            But raw grip is useless if your powertrain cooks itself. The thermal management on this setup is a work of genius. Running flat out dumps a ridiculous amount of thermal energy, and to keep performance from dropping off a cliff, specialized high-efficiency cooling loops, raw radiator ducts, and active louvers work together to extract heat from the engine bay while maintaining clean, uncompromised airflow over the bodywork.
+
+            Finally, the aerodynamics are pure black magic. Instead of relying on a massive, drag-heavy rear wing, the underbody utilizes deep venturi tunnels to create a massive low-pressure vacuum, literally sucking the floor down into the asphalt. Throw in active aero elements that flatten out on the straights to eliminate drag, and you get a machine that slips through the air on the straights but drops an absolute anvil of downforce the second you smash the brakes for a tight bend.`;
         }
-    }
 
-    function getContent(title) {
-        
-        // --- DRIVER BIOS ---
-        if (title.includes("Niki Lauda")) return `<b>Andreas Nikolaus "Niki" Lauda (1949 – 2019)</b><br><br>An Austrian racing driver, motorsport executive, and aviation entrepreneur, who competed in Formula One from 1971 to 1979 and from 1982 to 1985. Lauda won three Formula One World Drivers' Championship titles and—at the time of his retirement—held the record for most podium finishes (54).`;
-        if (title.includes("Max Verstappen")) return `<b>Max Emilian Verstappen (Born 1997)</b><br><br>A Dutch and Belgian racing driver who competes under the Dutch flag in Formula One for Red Bull Racing. Verstappen has won four Formula One World Drivers' Championship titles, which he won consecutively from 2021 to 2024 with Red Bull, and has won 71 Grands Prix across 12 seasons.`;
-        if (title.includes("James Hunt")) return `<b>James Simon Wallis Hunt (1947 – 1993)</b><br><br>A British racing driver and broadcaster who competed in Formula One from 1973 to 1979. Nicknamed "the Shunt", Hunt won the Formula One World Drivers' Championship in 1976 with McLaren and won 10 Grands Prix across seven seasons.`;
-        if (title.includes("Sebastian Vettel")) return `<b>Sebastian Vettel</b><br><br>A German racing driver who competed in Formula One from 2007 to 2022. Vettel won four Formula One World Drivers' Championship titles, which he won consecutively from 2010 to 2013 with Red Bull, and remains the youngest-ever World Drivers' Champion; he won 53 Grands Prix across 16 seasons.`;
-        if (title.includes("Ayrton Senna")) return `<b>Ayrton Senna da Silva (1960 – 1994)</b><br><br>A Brazilian racing driver who competed in Formula One from 1984 to 1994. Senna won three Formula One World Drivers' Championship titles with McLaren, and—at the time of his death—held the record for most pole positions (65).`;
-        if (title.includes("Alain Prost")) return `<b>Alain Marie Pascal Prost (Born 1955)</b><br><br>A French former racing driver and motorsport executive, who competed in Formula One from 1980 to 1993. Nicknamed "the Professor", Prost won four Formula One World Drivers' Championship titles.`;
+        function renderHero() {
+            return `<div class="hero"><h1>THE APEX</h1><p style="color: #e10600; font-weight: 700; letter-spacing: 12px;">F1 HEROES & HYPERCAR RADAR</p></div>`;
+        }
 
-        // ==========================================
-        // PASTE YOUR ORIGINAL ARTICLE TEXT LOGIC HERE
-        // (if (title.includes("...")) return "..."; )
-        // ==========================================
+        function renderHome() {
+            let html = renderHero() + '<div class="container mt-5 mb-5"><div class="row">';
+            blogPosts.forEach(p => {
+                html += `
+                    <div class="col-xl-4 col-lg-6 mb-5">
+                        <div class="card">
+                            <img src="${p.image}">
+                            <div class="p-4 text-center">
+                                <span style="color: #e10600; font-size: 0.75rem; font-weight: 900; letter-spacing: 3px;">${p.cat.toUpperCase()}</span>
+                                <h4 class="mt-3 mb-3" style="color:#fff; font-weight: 800; min-height: 54px;">${p.title}</h4>
+                                <span class="nav-btn mt-2 w-100" onclick="renderPost(${p.id})">READ DOSSIER</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            html += '</div></div>';
+            document.getElementById('main-content').innerHTML = html;
+            window.scrollTo(0,0);
+        }
 
-        return "Full article content coming soon.";
-    }
+        function renderCategory(cat) {
+            let html = renderHero() + '<div class="container mt-5 mb-5"><div class="row">';
+            let filtered = blogPosts.filter(p => p.cat.toLowerCase() === cat.toLowerCase());
+            filtered.forEach(p => {
+                html += `
+                    <div class="col-xl-4 col-lg-6 mb-5">
+                        <div class="card">
+                            <img src="${p.image}">
+                            <div class="p-4 text-center">
+                                <span style="color: #e10600; font-size: 0.75rem; font-weight: 900; letter-spacing: 3px;">${p.cat.toUpperCase()}</span>
+                                <h4 class="mt-3 mb-3" style="color:#fff; font-weight: 800; min-height: 54px;">${p.title}</h4>
+                                <span class="nav-btn mt-2 w-100" onclick="renderPost(${p.id})">READ DOSSIER</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            html += '</div></div>';
+            document.getElementById('main-content').innerHTML = html;
+            window.scrollTo(0,0);
+        }
 
-    function openReader(title, imageSrc) {
-        document.getElementById('main-view').style.display = 'none';
-        document.getElementById('reader-view').style.display = 'block';
-        document.getElementById('content-reader').style.display = 'block';
-        document.getElementById('reader-title').innerText = title;
-        document.getElementById('reader-image').src = imageSrc;
-        document.getElementById('reader-body').innerHTML = getContent(title);
-        window.scrollTo(0, 0);
-    }
+        function renderPost(id) {
+            const post = blogPosts.find(p => p.id === id);
+            const bodyContent = getContent(post.title);
+            let html = `
+                <div class="container mt-5 mb-5">
+                    <div class="row"><div class="col-lg-10 mx-auto">
+                        <img src="${post.image}" class="img-fluid rounded mb-5 shadow-lg" style="width:100%; max-height:500px; object-fit:cover;">
+                        <h1 class="display-4 fw-bold mb-3" style="color: #fff;">${post.title}</h1>
+                        <hr style="border-color: #333;">
+                        <div class="article-body">${bodyContent}</div>
+                        <div class="pit-wall">
+                            <h3 class="text-white fw-bold mb-1" style="color: var(--f1-red) !important;">THE PIT WALL</h3>
+                            <p class="text-secondary small mb-3">DROP A COMMENT OR DISCUSS THE GRID GEOMETRY BELOW</p>
+                            <textarea class="pit-input" rows="3" placeholder="What's your take on this layout?"></textarea>
+                            <button class="nav-btn" onclick="alert('Comment posted to the grid!')">POST COMMENT</button>
+                        </div>
+                    </div></div>
+                </div>
+            `;
+            document.getElementById('main-content').innerHTML = html;
+            window.scrollTo(0,0);
+        }
 
-    function closeReader() {
-        document.getElementById('reader-view').style.display = 'none';
-        document.getElementById('content-reader').style.display = 'none';
-        document.getElementById('main-view').style.display = 'block';
-    }
+        function renderArchive() {
+            let html = `
+                <div class="container mt-5 mb-5">
+                    <div class="row"><div class="col-lg-10 mx-auto">
+                        <h1 class="display-4 fw-bold text-white mb-2">THE COMPLETE BACKLOG</h1>
+                        <p class="text-secondary mb-5">Every single deep dive we've published, served fresh.</p>
+                        <div class="list-group">
+            `;
+            blogPosts.forEach(p => {
+                html += `
+                    <a onclick="renderPost(${p.id})" class="list-group-item list-group-item-action text-white bg-dark border-secondary p-4 mb-3 rounded d-flex justify-content-between align-items-center" style="transition: 0.3s; border-left: 4px solid var(--f1-red) !important; cursor:pointer;">
+                        <div>
+                            <span class="badge bg-danger mb-2" style="background-color: var(--f1-red) !important;">${p.cat.toUpperCase()}</span>
+                            <h4 class="mb-0 fw-bold">${p.title}</h4>
+                        </div>
+                        <span class="text-secondary fw-bold small">READ REPORT &rarr;</span>
+                    </a>
+                `;
+            });
+            html += '</div></div></div></div>';
+            document.getElementById('main-content').innerHTML = html;
+            window.scrollTo(0,0);
+        }
 
-    filterCategory('All');
-</script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        function renderPrivacy() {
+            document.getElementById('main-content').innerHTML = `<div class="container mt-5 mb-5"><div class="row"><div class="col-lg-9 mx-auto"><h1 class="display-4 fw-bold text-white">Privacy Policy</h1><hr style="border-color: #333;"><p>The APEX respects your data. We use standard Google AdSense cookies to serve relevant advertisements based on web telemetry profiles.</p></div></div></div>`;
+        }
+
+        function renderTerms() {
+            document.getElementById('main-content').innerHTML = `<div class="container mt-5 mb-5"><div class="row"><div class="col-lg-9 mx-auto"><h1 class="display-4 fw-bold text-white">Terms of Service</h1><hr style="border-color: #333;"><p>All enthusiast analysis and layout structures are the property of THE APEX. Enjoy the breakdowns responsibly.</p></div></div></div>`;
+        }
+
+        function renderContact() {
+            document.getElementById('main-content').innerHTML = `
+                <div class="container mt-5 mb-5"><div class="row"><div class="col-lg-8 mx-auto"><div class="contact-card">
+                    <h1 class="display-5 fw-bold text-white mb-2" style="color: var(--f1-red) !important;">CONTACT THE COCKPIT</h1>
+                    <p class="text-secondary mb-4">Got an engineering take, driver theory, or sponsor query? Drop a line.</p>
+                    <hr style="border-color: #333;">
+                    <h4 class="text-white fw-bold mt-4 mb-2">Email Node</h4>
+                    <p style="font-size: 1.6rem; color: #fff; font-weight: bold; font-family: monospace; background: #050505; padding: 15px; border-radius: 6px; border: 1px solid #222; display: inline-block;">avyayjha0@gmail.com</p>
+                    <p class="text-secondary small mt-3">Location: Gurugram, India</p>
+                </div></div></div></div>`;
+        }
+
+        renderHome();
+    </script>
 </body>
 </html>
